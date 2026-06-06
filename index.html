@@ -51,7 +51,7 @@ canvas#display { cursor:pointer; }
   padding:13px;
   font-size:0.65rem;
 }
-.counter { font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.2em; color:rgba(40,80,120,0.5); }
+.counter { font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.2em; color:rgba(80,130,190,0.75); }
 .hint { font-size:0.5rem; color:#1a3050; letter-spacing:0.15em; text-align:center; font-family:'Share Tech Mono',monospace; }
 </style>
 </head>
@@ -95,31 +95,31 @@ const ctx = canvas.getContext("2d");
 
 function navyBg() {
   const g = ctx.createRadialGradient(W*0.8,H*0.1,10,W/2,H/2,W);
-  g.addColorStop(0,"#0a1628"); g.addColorStop(0.5,"#060d1a"); g.addColorStop(1,"#020609");
+  g.addColorStop(0,"#112240"); g.addColorStop(0.5,"#0a1628"); g.addColorStop(1,"#060e1c");
   ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
 }
 
 function drawGeometry() {
   ctx.save();
-  ctx.globalAlpha = 0.18;
-  ctx.strokeStyle = "rgba(80,150,230,0.6)"; ctx.lineWidth = 2;
+  ctx.globalAlpha = 0.35;
+  ctx.strokeStyle = "rgba(80,160,255,0.9)"; ctx.lineWidth = 2;
   // Top right triangle
   ctx.beginPath(); ctx.moveTo(W,0); ctx.lineTo(W,H*0.42); ctx.lineTo(W*0.56,0); ctx.closePath(); ctx.stroke();
   // Bottom left triangle
   ctx.beginPath(); ctx.moveTo(0,H); ctx.lineTo(W*0.28,H); ctx.lineTo(0,H*0.7); ctx.closePath(); ctx.stroke();
   // Diagonal
-  ctx.strokeStyle="rgba(60,110,180,0.3)"; ctx.lineWidth=1.5;
+  ctx.strokeStyle="rgba(80,140,230,0.5)"; ctx.lineWidth=1.5;
   ctx.beginPath(); ctx.moveTo(0,H); ctx.lineTo(W,0); ctx.stroke();
   // Horizontal lines
-  ctx.strokeStyle="rgba(60,110,180,0.2)"; ctx.lineWidth=1;
+  ctx.strokeStyle="rgba(80,140,230,0.35)"; ctx.lineWidth=1;
   [H*0.33,H*0.66].forEach(y=>{ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();});
   // Corner brackets TL
-  ctx.strokeStyle="rgba(80,150,230,0.5)"; ctx.lineWidth=2.5;
+  ctx.strokeStyle="rgba(100,170,255,0.8)"; ctx.lineWidth=2.5;
   ctx.beginPath(); ctx.moveTo(50,100); ctx.lineTo(50,50); ctx.lineTo(100,50); ctx.stroke();
   // Corner brackets BR
   ctx.beginPath(); ctx.moveTo(W-50,H-100); ctx.lineTo(W-50,H-50); ctx.lineTo(W-100,H-50); ctx.stroke();
   // Diamond center
-  ctx.strokeStyle="rgba(80,150,230,0.3)"; ctx.lineWidth=1.5;
+  ctx.strokeStyle="rgba(100,170,255,0.55)"; ctx.lineWidth=1.5;
   ctx.beginPath(); ctx.moveTo(W/2,H/2-20); ctx.lineTo(W/2+20,H/2); ctx.lineTo(W/2,H/2+20); ctx.lineTo(W/2-20,H/2); ctx.closePath(); ctx.stroke();
   ctx.restore();
 }
@@ -143,7 +143,7 @@ function drawGlowText(text, x, y, size, color, glow, align="left", maxW=900) {
   ctx.font = `300 ${size}px 'Rajdhani',sans-serif`;
   ctx.fillStyle = color;
   ctx.shadowColor = "rgba(80,160,255,0.9)";
-  ctx.shadowBlur = glow ? 30 : 0;
+  ctx.shadowBlur = glow ? 55 : 0;
   ctx.textAlign = align;
   ctx.textBaseline = "top";
   const lines = text.split("\n");
@@ -157,7 +157,7 @@ function drawMonoText(text, x, y, size, color, glow=false) {
   ctx.font = `${size}px 'Share Tech Mono',monospace`;
   ctx.fillStyle = color;
   ctx.shadowColor = "rgba(80,160,255,0.8)";
-  ctx.shadowBlur = glow ? 20 : 0;
+  ctx.shadowBlur = glow ? 40 : 0;
   ctx.textAlign = "left";
   ctx.textBaseline = "top";
   ctx.fillText(text, x, y);
@@ -184,11 +184,11 @@ function drawSlide(slide) {
     y += 40;
     drawGlowText(slide.sub, L, y, 34, "rgba(160,210,255,1)", true, "left");
     // Tag bottom
-    drawMonoText(slide.tag, L, H-80, 22, "rgba(40,80,120,0.5)");
+    drawMonoText(slide.tag, L, H-80, 22, "rgba(80,130,190,0.75)");
   }
 
   if(slide.type === "statement") {
-    drawMonoText(`0${slide.number} ──`, L, H*0.25, 24, "rgba(60,110,160,0.6)");
+    drawMonoText(`0${slide.number} ──`, L, H*0.25, 24, "rgba(90,150,220,0.85)");
     let y = H*0.25 + 50;
     y += drawGlowText(slide.headline, L, y, 62, "#e0eaf5", false, "left");
     y += 30;
@@ -198,13 +198,13 @@ function drawSlide(slide) {
   }
 
   if(slide.type === "stat") {
-    drawMonoText(`0${slide.number} ──`, L, H*0.2, 24, "rgba(60,110,160,0.6)");
+    drawMonoText(`0${slide.number} ──`, L, H*0.2, 24, "rgba(90,150,220,0.85)");
     // Big stat
     ctx.save();
     ctx.font = "100 200px 'Rajdhani',sans-serif";
-    ctx.fillStyle = "rgba(120,190,255,0.9)";
-    ctx.shadowColor = "rgba(80,150,240,0.5)";
-    ctx.shadowBlur = 60;
+    ctx.fillStyle = "rgba(140,210,255,1)";
+    ctx.shadowColor = "rgba(80,160,255,0.9)";
+    ctx.shadowBlur = 90;
     ctx.textAlign = "left";
     ctx.textBaseline = "top";
     ctx.fillText(slide.stat, L-10, H*0.26);
@@ -233,12 +233,12 @@ function drawSlide(slide) {
     ctx.beginPath(); ctx.moveTo(L,y+16); ctx.lineTo(L+60,y+16); ctx.stroke();
     ctx.restore();
     drawMonoText("DM ABIERTO →", L+80, y, 26, "rgba(160,210,255,1)", true);
-    drawMonoText(slide.tag, L, H-80, 22, "rgba(40,80,120,0.5)");
+    drawMonoText(slide.tag, L, H-80, 22, "rgba(80,130,190,0.75)");
   }
 
   // Bottom line
-  drawLine(L, H-50, W*0.4, H-50, "rgba(40,80,120,0.2)", 1);
-  drawMonoText(`${current+1} / ${slides.length}`, W-80, H-68, 20, "rgba(40,80,120,0.4)");
+  drawLine(L, H-50, W*0.4, H-50, "rgba(80,130,190,0.35)", 1);
+  drawMonoText(`${current+1} / ${slides.length}`, W-80, H-68, 20, "rgba(80,130,190,0.65)");
 }
 
 function render() {
