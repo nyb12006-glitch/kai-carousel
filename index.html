@@ -51,7 +51,7 @@ canvas#display { cursor:pointer; }
   padding:13px;
   font-size:0.65rem;
 }
-.counter { font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.2em; color:rgba(80,130,190,0.75); }
+.counter { font-family:'Share Tech Mono',monospace; font-size:0.52rem; letter-spacing:0.2em; color:rgba(110,165,220,0.95); }
 .hint { font-size:0.5rem; color:#1a3050; letter-spacing:0.15em; text-align:center; font-family:'Share Tech Mono',monospace; }
 </style>
 </head>
@@ -95,13 +95,13 @@ const ctx = canvas.getContext("2d");
 
 function navyBg() {
   const g = ctx.createRadialGradient(W*0.8,H*0.1,10,W/2,H/2,W);
-  g.addColorStop(0,"#112240"); g.addColorStop(0.5,"#0a1628"); g.addColorStop(1,"#060e1c");
+  g.addColorStop(0,"#1a3560"); g.addColorStop(0.5,"#0f2040"); g.addColorStop(1,"#0a1428");
   ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
 }
 
 function drawGeometry() {
   ctx.save();
-  ctx.globalAlpha = 0.35;
+  ctx.globalAlpha = 0.55;
   ctx.strokeStyle = "rgba(80,160,255,0.9)"; ctx.lineWidth = 2;
   // Top right triangle
   ctx.beginPath(); ctx.moveTo(W,0); ctx.lineTo(W,H*0.42); ctx.lineTo(W*0.56,0); ctx.closePath(); ctx.stroke();
@@ -143,7 +143,7 @@ function drawGlowText(text, x, y, size, color, glow, align="left", maxW=900) {
   ctx.font = `300 ${size}px 'Rajdhani',sans-serif`;
   ctx.fillStyle = color;
   ctx.shadowColor = "rgba(80,160,255,0.9)";
-  ctx.shadowBlur = glow ? 55 : 0;
+  ctx.shadowBlur = glow ? 80 : 0;
   ctx.textAlign = align;
   ctx.textBaseline = "top";
   const lines = text.split("\n");
@@ -157,7 +157,7 @@ function drawMonoText(text, x, y, size, color, glow=false) {
   ctx.font = `${size}px 'Share Tech Mono',monospace`;
   ctx.fillStyle = color;
   ctx.shadowColor = "rgba(80,160,255,0.8)";
-  ctx.shadowBlur = glow ? 40 : 0;
+  ctx.shadowBlur = glow ? 60 : 0;
   ctx.textAlign = "left";
   ctx.textBaseline = "top";
   ctx.fillText(text, x, y);
@@ -184,11 +184,11 @@ function drawSlide(slide) {
     y += 40;
     drawGlowText(slide.sub, L, y, 34, "rgba(160,210,255,1)", true, "left");
     // Tag bottom
-    drawMonoText(slide.tag, L, H-80, 22, "rgba(80,130,190,0.75)");
+    drawMonoText(slide.tag, L, H-80, 22, "rgba(110,165,220,0.95)");
   }
 
   if(slide.type === "statement") {
-    drawMonoText(`0${slide.number} ──`, L, H*0.25, 24, "rgba(90,150,220,0.85)");
+    drawMonoText(`0${slide.number} ──`, L, H*0.25, 24, "rgba(110,175,240,1)");
     let y = H*0.25 + 50;
     y += drawGlowText(slide.headline, L, y, 62, "#e0eaf5", false, "left");
     y += 30;
@@ -198,13 +198,13 @@ function drawSlide(slide) {
   }
 
   if(slide.type === "stat") {
-    drawMonoText(`0${slide.number} ──`, L, H*0.2, 24, "rgba(90,150,220,0.85)");
+    drawMonoText(`0${slide.number} ──`, L, H*0.2, 24, "rgba(110,175,240,1)");
     // Big stat
     ctx.save();
     ctx.font = "100 200px 'Rajdhani',sans-serif";
-    ctx.fillStyle = "rgba(140,210,255,1)";
-    ctx.shadowColor = "rgba(80,160,255,0.9)";
-    ctx.shadowBlur = 90;
+    ctx.fillStyle = "rgba(180,225,255,1)";
+    ctx.shadowColor = "rgba(100,180,255,1)";
+    ctx.shadowBlur = 120;
     ctx.textAlign = "left";
     ctx.textBaseline = "top";
     ctx.fillText(slide.stat, L-10, H*0.26);
@@ -233,12 +233,12 @@ function drawSlide(slide) {
     ctx.beginPath(); ctx.moveTo(L,y+16); ctx.lineTo(L+60,y+16); ctx.stroke();
     ctx.restore();
     drawMonoText("DM ABIERTO →", L+80, y, 26, "rgba(160,210,255,1)", true);
-    drawMonoText(slide.tag, L, H-80, 22, "rgba(80,130,190,0.75)");
+    drawMonoText(slide.tag, L, H-80, 22, "rgba(110,165,220,0.95)");
   }
 
   // Bottom line
-  drawLine(L, H-50, W*0.4, H-50, "rgba(80,130,190,0.35)", 1);
-  drawMonoText(`${current+1} / ${slides.length}`, W-80, H-68, 20, "rgba(80,130,190,0.65)");
+  drawLine(L, H-50, W*0.4, H-50, "rgba(110,165,220,0.55)", 1);
+  drawMonoText(`${current+1} / ${slides.length}`, W-80, H-68, 20, "rgba(110,165,220,0.85)");
 }
 
 function render() {
