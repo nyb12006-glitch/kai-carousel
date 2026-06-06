@@ -99,6 +99,12 @@ function navyBg() {
   ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
 }
 
+function coverBg() {
+  const g = ctx.createRadialGradient(W*0.8,H*0.1,10,W/2,H/2,W);
+  g.addColorStop(0,"#0a1628"); g.addColorStop(0.5,"#060d1a"); g.addColorStop(1,"#020609");
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+}
+
 function drawGeometry() {
   ctx.save();
   ctx.globalAlpha = 0.55;
@@ -138,12 +144,12 @@ function drawTopBar(slide) {
   ctx.fillText("KAI", W-50, 68);
 }
 
-function drawGlowText(text, x, y, size, color, glow, align="left", maxW=900) {
+function drawGlowText(text, x, y, size, color, glow, align="left", maxW=900, glowStrength=80) {
   ctx.save();
   ctx.font = `300 ${size}px 'Rajdhani',sans-serif`;
   ctx.fillStyle = color;
   ctx.shadowColor = "rgba(80,160,255,0.9)";
-  ctx.shadowBlur = glow ? 80 : 0;
+  ctx.shadowBlur = glow ? glowStrength : 0;
   ctx.textAlign = align;
   ctx.textBaseline = "top";
   const lines = text.split("\n");
@@ -170,7 +176,7 @@ function drawLine(x1,y1,x2,y2,color,w=1) {
 }
 
 function drawSlide(slide) {
-  navyBg();
+  slide.type === "cover" ? coverBg() : navyBg();
   drawGeometry();
   drawTopBar(slide);
 
@@ -178,12 +184,13 @@ function drawSlide(slide) {
   const midY = H/2;
 
   if(slide.type === "cover") {
-    drawLine(L, midY-160, L+60, midY-160, "rgba(80,150,230,0.5)", 2);
+    drawLine(L, midY-160, L+60, midY-160, "rgba(100,180,255,0.8)", 2);
     let y = midY - 140;
-    y += drawGlowText(slide.headline, L, y, 68, "#e0eaf5", false, "left");
+    // Double pass for extra glow on headline
+    drawGlowText(slide.headline, L, y, 68, "rgba(255,255,255,0.15)", true, "left", 900, 140);
+    y += drawGlowText(slide.headline, L, y, 68, "#ffffff", true, "left", 900, 110);
     y += 40;
-    drawGlowText(slide.sub, L, y, 34, "rgba(160,210,255,1)", true, "left");
-    // Tag bottom
+    drawGlowText(slide.sub, L, y, 34, "rgba(160,210,255,1)", true, "left", 900, 100);
     drawMonoText(slide.tag, L, H-80, 22, "rgba(110,165,220,0.95)");
   }
 
